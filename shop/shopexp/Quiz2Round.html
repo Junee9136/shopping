@@ -1,0 +1,26 @@
+{{block title}}
+<center><h3>Instructions Quiz</h3></center>
+{{endblock}}
+{{block content}}
+
+<div id = "quiz3" class="card bg-light m-3">
+    <div class="card-body">
+        <strong>Q4.</strong> When a round has two stores, you should examine both stores before making your
+        purchases (True/False)?
+        {% formfield player.quiz4 %}
+        </div>
+    </div>
+
+<center>{{next_button}}</center>
+
+<style>
+    #quiz3 {
+  box-sizing:content-box;
+  width: 320px;
+  height: 200px;
+  position: relative;
+  left: 290px;
+}
+
+</style>
+{{endblock}}

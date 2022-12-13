@@ -1,0 +1,352 @@
+{{block title}}
+<center><h3>Instructions Quiz</h3></center>
+{{endblock}}
+{{block content}}
+
+<div id = "quiz2" class="card bg-light m-3">
+    <div class="card-body">
+        To illustrate how you make your decision in each store, consider the following hypothetical store;
+        you have a 6 ECU gift certificate for this store, apples and oranges each cost 1 ECU per unit of fruit.
+        Your store page will be laid out as follow.<br><br>
+        <ul> <u> Store </u>
+            <li>You have a <strong>6 ECU</strong> gift certificate to spend. </li>
+            <li>The price of apples is 1 ECU per apple.</li>
+            <li>The price of oranges is 1 ECU per orange.</li>
+        </ul>
+    <strong>Q1.</strong>
+        Please choose bundle (4 apples, 2 oranges) as your purchase from this store.<br><br>
+        <table id="t1" style="width:70%" >
+        <tr>
+            <td ></td>
+            <td id="styling" class="second_column"><div class="slidecontainer">
+                <p id="description">Use the slider to indicate your purchase</p>
+                <input type="range" class = "slider" id="quiz1" min="0" max="6" onchange="showButton()" oninput="updateDescription(this)">
+            </div></td>
+			<td></td>
+		</tr>
+
+        <tr>
+         <td id="styling" class="first_column"><p id="assetA"><span><span> Apple(s)</span>
+            </span></p></td>
+         <td id="arrowA">
+             <div class="arrow">
+                <div class="line"></div>
+                <div class="point"></div>
+             </div>
+         </td>
+         <td></td>
+        </tr>
+        <tr>
+         <td></td>
+         <td id="arrowB">
+             <div class="arrow2">
+                <div class="point2"></div>
+                <div class="line2"></div>
+             </div>
+         </td>
+         <td id="styling" class="third_column"><p id="assetB"><span><span> Orange(s)</span>
+            </span></p></td>
+        </tr>
+
+    </table>
+        <br>
+
+
+
+    </div>
+</div>
+
+<script>
+
+    var movingSlider1 = false
+		let description = document.getElementById('description');
+    function updateDescription(input) {
+        let a_choice = parseInt(input.value);
+        let o_choice = 6 - a_choice;
+        description.innerText = `${a_choice} apples and ${o_choice} oranges`;
+        movingSlider1 = true;
+    }
+    function showButton() {
+        document.getElementById("quiz1").classList.add('slider-thumb-PR');
+        document.getElementById('next2').style.visibility = 'visible';
+    }
+</script>
+
+<button id="next2" style="visibility: hidden;" onclick="myFunction()"
+        class="btn btn-primary popup" type="button">Finalize your choices
+</button>
+<script>
+
+var next2 = document.getElementById("next2");
+
+function myFunction() {
+  var val = document.getElementById("quiz1").value;
+  if (val == 4) {
+        next2.type = "";
+        }
+  else {
+        next2.type = "button";
+        alert("Please make the asset allocation indicated");
+    }
+}
+
+
+</script>
+<script>
+    var movingSlider1 = false
+    let description = document.getElementById('description');
+    function updateDescription(input) {
+        let asset_quiz = parseInt(input.value);
+        let asset_B = 12 - asset_quiz
+        description.innerText = `${asset_quiz} apples and ${asset_B} oranges`;
+        movingSlider1 = true;
+    }
+    function showButton1(){
+        document.getElementById("asset_quiz").classList.add('slider-thumb-PR');
+        if (movingSlider1) {
+            document.getElementById('next2').style.visibility = 'visible';
+        };
+    }
+
+
+</script>
+<style>
+
+    #quiz1 {
+  width: 100%;
+}
+
+
+ #styling {
+  text-align: center;
+}
+
+.first_column {
+  table-layout: auto;
+}
+
+#assetA {
+  position: relative;
+  left: 50px;
+  color: #243743;
+}
+
+#assetB {
+  position: relative;
+  right: 50px;
+  color: #28B78D;
+}
+
+#next2 {
+  float: right;
+}
+
+.second_column {
+   width: 50%;
+}
+
+
+.arrow {
+  width: 100%;
+  position: relative;
+}
+
+.line {
+  margin-top: 8px;
+  width: 98%;
+  background: #243743;
+  height: 2px;
+  float: left;
+  position: absolute;
+}
+
+.point {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #243743;
+  float: right;
+}
+
+
+.arrow2 {
+  width: 100%;
+  position: relative;
+}
+
+.line2 {
+  margin-top: 9px;
+  width: 98%;
+  background: #28B78D;
+  height: 2px;
+  float: right;
+  position: absolute;
+}
+
+.point2 {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid #28B78D;
+  float: left;
+}
+
+
+.third_column {
+   table-layout: auto;
+}
+
+
+.slider{
+  -webkit-appearance: none;
+   width: 100%;
+   height: 15px;
+   border-radius: 5px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+}
+
+
+.slider:hover {
+  opacity: 1;
+}
+
+
+.slider-thumb-PR::-webkit-slider-thumb{
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #58949C;
+}
+
+.slider-thumb-PR2::-webkit-slider-thumb{
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #58949C;
+}
+
+input[type=range]::-webkit-slider-thumb {
+      border: none;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      -webkit-appearance: none;
+   }
+
+ul {
+  padding-left: 80px;
+}
+
+#styling {
+  text-align: center;
+}
+
+.first_column {
+  table-layout: auto;
+}
+
+.second_column {
+   width: 50%;
+}
+
+.third_column {
+   table-layout: auto;
+}
+
+.tstyle {visibility: hidden;
+}
+
+.slider{
+  -webkit-appearance: none;
+   width: 100%;
+   height: 15px;
+   border-radius: 5px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+}
+
+
+.slider:hover {
+  opacity: 1;
+}
+
+
+.slider-thumb-PR::-webkit-slider-thumb{
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #58949C;
+}
+
+.slider-thumb-PR2::-webkit-slider-thumb{
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #58949C;
+}
+
+input[type=range]::-webkit-slider-thumb {
+      border: none;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      -webkit-appearance: none;
+   }
+
+
+
+
+#n1 {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 5px 0;
+  border: 1px solid ;
+}
+
+#n2 {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 5px 0;
+  border: 1px solid;
+  border-radius: 1px;
+}
+
+#result {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 5px 0;
+  border: 1px solid;
+  border-radius: 1px;
+}
+
+#container {
+  font-size: 15px;
+}
+#container{
+	width: 300px;
+	height: 250px;
+	background-color: #daf1f1;
+	margin: 20px auto;
+
+}
+#ins2 {
+position: relative;
+  left: 300px;
+  box-sizing:content-box;
+  width: 320px;
+  height: 250px;
+  top: -20px;
+}
+
+
+#next2 {
+   position: relative;
+   float: right;
+    }
+</style>
+{{endblock}}

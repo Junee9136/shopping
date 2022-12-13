@@ -1,0 +1,359 @@
+{{ block title }}
+{{ endblock }}
+{{ block content }}
+<!-- References: https://www.otreehub.com/projects/otree-snippets/  -->
+<style>
+    .tab {
+        display: none;
+    }
+
+</style>
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        Thank you for completing the Shopping Experiment!<br>
+        Next, please answer following questions to complete the study. <br>
+        For some relevant questions, you need to input valid integer entry into the box in order to move forward.<br>
+        When you're done with a question, click "Next" to proceed to the next one.
+        </div>
+    </div>
+    <p>
+        <button type="button" class="btn btn-primary btn-tab" data-offset="1"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        <strong></strong> In general, how willing or unwilling are you to take risks? <br>
+            Please use a scale from 0 to 10, where 0 means you are ”completely unwilling to take risks”,
+            and 10 means you are "completely willing to take risks".<br><br>
+        <table style="width:100%">
+        <tr>
+            <td id="styling" class="first_column"> 0</td>
+            <td id="styling" class="second_column"><div class="slidecontainer">
+                <input type = 'range' id="survey0" name="survey0" class="slider" min="0" max="10" value="0" onchange="showButton()">
+            <td id="styling" class="third_column"> 10</td>
+		</tr>
+
+        <tr>
+            <td><center>Completely unwilling to take risks</center></td>
+            <td></td>
+            <td><center>Completely willing to take risks</center></td>
+        </tr>
+
+        </table>
+                {{ formfield_errors 'survey0' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt" type="button" class="btn btn-primary btn-tab" data-offset="1" style="visibility: hidden;"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        Simon decided to invest $8,000 in the stock market one day in early 2008.
+        Six months after he invested, on July 17, the stocks he had purchased were down 50%.
+        Fortunately for Simon, from July 17 to October 17, the stocks he had purchased went up 75%.
+        At this point, Simon has:<br><br>
+        <label for="survey1">Choose an option:</label>
+        <select name="survey1" id="survey1" onchange="showButton1()">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="opt1">broken even in the stock market</option>
+            <option value="opt2">is ahead of where he began</option>
+            <option value="opt3">has lost money</option>
+        </select>
+        {{ formfield_errors 'survey1' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt1" type="button" class="btn btn-primary btn-tab" data-offset="1" style="visibility: hidden;"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        A man buys a pig for $60, sells it for $70, buys it back for $70,
+        and sells it finally for $90. How much has he made? <br><br>
+        <input type = 'text'class="textinput" id="survey2" name="survey2" onfocus="this.value=''"> dollars
+        {{ formfield_errors 'survey2' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt2" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        Jerry received both the 15th highest and the 15th lowest mark in the class.
+        How many students are in the class?<br><br>
+        <input type = 'text' class="textinput" id="survey3" name="survey3" onfocus="this.value=''"> students
+        {{ formfield_errors 'survey3' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt3" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        If John can drink one barrel of water in 6 days,
+        and Mary can drink one barrel of water in 12 days,
+        how long would it take them to drink one barrel of water together?<br><br>
+        <input type = 'text' class="textinput" id="survey4" name="survey4" onfocus="this.value=''"> days
+        {{ formfield_errors 'survey4' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt4" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        In a lake, there is a patch of lily pads.  Every day, the patch doubles in size.
+        If it takes 48 days for the patch to cover the entire lake,
+        how long would it take for the patch to cover half of the lake?<br><br>
+        <input type = 'text' class="textinput" id="survey5" name="survey5" onfocus="this.value=''"> days
+        {{ formfield_errors 'survey5' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt5" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        If it takes 5 machines 5 minutes to make 5 widgets,
+        how long would it take 100 machines to make 100 widgets?<br><br>
+        <input type = 'text' class="textinput" id="survey6" name="survey6" onfocus="this.value=''"> minutes
+        {{ formfield_errors 'survey6' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt6" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        A ball and a bat cost $1.10 in total.
+        The bat costs a dollar more than the ball. How much does the ball cost?<br><br>
+        <input type = 'text' class="textinput" id="survey7" name="survey7" onfocus="this.value=''"> dollars
+        {{ formfield_errors 'survey7' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt7" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        In what year were you born?<br><br>
+        <input type = 'text' id="survey8" name="survey8" onfocus="this.value=''">
+        {{ formfield_errors 'survey8' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt8" type="button" class="btn btn-primary btn-tab" data-offset="1" style="display: none"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        What is your gender?<br><br>
+        <select name="survey9" id="survey9" onchange="showButton2()">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="opt1">Male</option>
+            <option value="opt2">Female</option>
+            <option value="opt3">Other</option>
+        </select>
+        {{ formfield_errors 'survey9' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt9" type="button" class="btn btn-primary btn-tab" data-offset="1" style="visibility: hidden;"> Next </button>
+    </p>
+</div>
+
+<div class="tab">
+    <h3><center> Final Survey </center></h3><br>
+    <div class="card bg-light m-3">
+    <div class="card-body">
+        What is the highest level of educational you have completed?<br><br>
+        <select name="survey10" id="survey10" onchange="showButton3()">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="opt1">Did not graduate from high school</option>
+            <option value="opt2">High school graduate</option>
+            <option value="opt3">Some college, but no degree (yet)</option>
+            <option value="opt4">2-year college degree</option>
+            <option value="opt5">4-year college degree</option>
+            <option value="opt6">Postgraduate degree (MA, MBA, MD, PhD, JD, etc)</option>
+        </select>
+        {{ formfield_errors 'survey10' }}
+        </div>
+    </div>
+    <p>
+        <button id="bt10" class="btn btn-primary" style="visibility: hidden;"> Next </button>
+    </p>
+</div>
+
+<script>
+
+    let activeTab = 0;
+
+    function showCurrentTabOnly() {
+        let tabIndex = 0;
+        for (let tab of document.getElementsByClassName('tab')) {
+            tab.style.display = tabIndex === activeTab ? 'block' : 'none';
+            tabIndex++;
+        }
+    }
+
+    showCurrentTabOnly();
+    for (let btn of document.getElementsByClassName('btn-tab')) {
+        btn.onclick = function () {
+            activeTab += parseInt(btn.dataset.offset);
+            showCurrentTabOnly();
+        }
+    }
+
+function showButton(){
+        document.getElementById('bt').style.visibility = 'visible';
+    }
+
+function showButton1(){
+        document.getElementById('bt1').style.visibility = 'visible';
+    }
+
+function showButton2(){
+        document.getElementById('bt9').style.visibility = 'visible';
+    }
+
+function showButton3(){
+        document.getElementById('bt10').style.visibility = 'visible';
+    }
+
+$('#survey2').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt2').show()
+    else
+       $('#bt2').hide()
+});
+
+$('#survey3').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt3').show()
+    else
+       $('#bt3').hide()
+});
+
+$('#survey4').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt4').show()
+    else
+       $('#bt4').hide()
+});
+
+$('#survey5').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt5').show()
+    else
+       $('#bt5').hide()
+});
+
+$('#survey6').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt6').show()
+    else
+       $('#bt6').hide()
+});
+
+$('#survey7').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt7').show()
+    else
+       $('#bt7').hide()
+});
+
+$('#survey8').keyup(function(){
+   if($.trim(this.value).length > 0)
+       $('#bt8').show()
+    else
+       $('#bt8').hide()
+});
+
+
+
+</script>
+
+<style>
+#next {
+   float: right;
+    }
+
+#next2 {
+   float: right;
+    }
+
+.slider{
+    width: 100%;
+   height: 15px;
+   border-radius: 5px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+}
+
+#styling {
+  text-align: center;
+}
+
+.first_column {
+  table-layout: auto;
+}
+
+.first_column {
+  width: 5%;
+}
+
+.second_column {
+   width: 30%;
+}
+
+.third_column {
+   table-layout: auto;
+}
+
+.third_column {
+   width: 5%;
+}
+
+
+</style>
+{{ endblock }}

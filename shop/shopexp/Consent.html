@@ -1,0 +1,98 @@
+{% load otree static %}
+{{ block title}}
+<center>Welcome!</center>
+{{endblock}}
+
+
+{% block content %}
+
+<body>
+
+    <!-- Slide container -->
+    <div class="card bg-light m-3">
+    <div class="card-body">
+<h4 style="text-align:justify; font-size:25px;"> <b><u>Principal Investigator:</u></b> </h4>
+            <p style="text-align:justify; font-size:17px;">
+                Professor David Freeman, david_freeman@sfu.ca <br>
+                Department of Economics, Simon Fraser University, BC, Canada.</p>
+
+            <h4 style="text-align:justify; font-size:25px;"> <b><u>Description:</u></b> </h4>
+
+            <p style="text-align:justify; font-size:17px;">
+                In this study, you will make a series of choices and receive a bonus payment that will be determined based on your choices.  First, you will be asked to read instructions that  explain how your bonus payment will be determined from your choices.  Second, you must complete a quiz on the instructions.  You are only allowed up to 10 attempts to pass the quiz, otherwise you will not be able to participate in the study.  Then, you will make your choices.  Finally, your bonus payment will be calculated as explained in the instructions.
+        </p>
+            <p style="text-align:justify; font-size:17px;">
+                To receive payment for this study, you must successfully complete the quiz and all choices in the study. All payments will be in USD.<br>
+                You can only complete this study using Chrome, Edge, or Safari on a desktop or laptop computer.
+            </p>
+
+        <h4 style="text-align:justify; font-size:25px;"> <b><u>Confidentiality:</u></b> </h4>
+            <p style="text-align:justify; font-size:17px;">
+                Your choices will be kept strictly confidential. We have
+                made every effort to guarantee your privacy and
+                anonymity. Following the completion of the study,
+                data will be kept on a secure server. You will never be
+                identified by name or any other identifying feature with
+                relation to this study.
+            </p>
+
+        <h4 style="text-align:justify; font-size:25px;"> <b><u>Consent:</u></b> </h4>
+
+
+                <p style="text-align:justify; font-size:17px;">
+                Your participation in this study is entirely voluntary and
+                you may refuse to participate or withdraw from the study
+                at any time. You can print this the consent form
+                and maintain it for your own records. </p>
+
+                <p style="text-align:justify; font-size:17px;">
+                NOTE: Please check the box below before taking part in this study.
+                We greatly appreciate you taking your time to participate.</p>
+
+
+            <!-- Check box T&C -->
+            <div class="checkBox">
+                <input type="checkbox" required id="TC" name="TC" value="check">
+                <label for="TC"> I agree to participate in this
+                    experiment.</label>
+            </div> <br>
+            <p> Contact for complaints: If you have any concerns about your rights as a research participant and/or
+                your experiences while participating in this study,
+                you may contact the SFU Office of Research Ethics at dore@sfu.ca or 778-782-6618. </p>
+        <h4 style="text-align:justify; font-size:25px;"> <b><u>Prolific ID</u></b> </h4>
+        <p>Please provide your Prolific ID so that you can be paid for this study.</p>
+        {{ formfield 'prolific' }}
+
+        </div>
+    </div>
+</body>
+
+
+    </div>
+
+
+<center><button id="next2" onclick="BrowserDetect()"
+        class="btn btn-primary popup" type="button">Next
+</button></center>
+<input type="hidden" name="is_mobile" id="is_mobile">
+<script>
+    var isChrome = navigator.userAgent.indexOf("Chrome") != -1;
+    var isSafari = window.safari !== undefined;
+    var isEdge = /Edg/.test(navigator.userAgent);
+    var next2 = document.getElementById("next2");
+    alertmessage = "We detect that you are not using a compatible browser. Please either complete this task using Chrome, Edge, or Safari on a desktop or laptop computer, or return this submission."
+    function BrowserDetect() {
+    if ((isEdge) || (isChrome) || (isSafari)) {
+    next2.type = ""
+    }
+    else {
+    alert (alertmessage)
+    next2.type = "button"
+    };
+    }
+
+
+</script>
+{% endblock %}
+
+

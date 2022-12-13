@@ -1,0 +1,70 @@
+{{block title}}
+<center><h3>Instructions Quiz</h3></center>
+{{endblock}}
+{{block content}}
+<div>
+    <button id="reset" type='reset' onclick="toggleText()">Click to use the calculator</button><br><br>
+
+        <p id="container" style='display: none'> <strong>PAYOFF CALCULATOR</strong><br><br>
+        If you purchase: <br> <br>
+    <strong>Number of Apples</strong> &nbsp &nbsp <input type="text" id="n1"/><br/><br/>
+    <strong>Number of Oranges</strong> &nbsp <input type="text" id="n2"/><br/><br/>
+        Then your payoff is: <br><br>
+        <button type = "button" onclick="calc();">Click to calculate</button>
+        &nbsp<input type="text" id="result"/>
+</div>
+
+<div id = "quiz2" class="card bg-light m-3">
+    <div class="card-body">
+
+    <strong>Q2.</strong>
+        How much would you earn if a round with
+        only the store above was the round that counts, and you had chosen the bundle of 4 apples and 2 oranges (Hint: Use the calculator)?
+        {% formfield player.quiz2 %}<br>
+    <strong>Q3. </strong> Suppose that the round that counts had two stores.
+        In Store 1, you bought 1 apple and 4 oranges. In Store 2,
+        you bought 3 apples and 5 oranges. What would your earnings be for
+        the experiment (Hint: Use the calculator)?
+        {% formfield player.quiz3 %}
+    </div></div>
+
+<center>{{next_button}}</center>
+<script>
+
+    function calc() {
+        var n1 = parseFloat(document.getElementById('n1').value);
+        var n2 = parseFloat(document.getElementById('n2').value);
+        if (js_vars.treatment == 1) {
+	        document.getElementById('result').value = ((((1/10)*Math.pow(Math.sqrt(n1)+Math.sqrt(n2),2))*4)).toFixed(2);
+	    } else {
+	        document.getElementById('result').value = ((1/10)*Math.pow(Math.sqrt(n1)+Math.sqrt(n2),2)).toFixed(2);
+	    };
+	    return document.getElementById('result').value
+	}
+
+	function toggleText() {
+        var text = document.getElementById("container");
+        var quiz2 = document.getElementById("quiz2");
+        var reset = document.getElementById("reset");
+        quiz2.classList.toggle("tstyle");
+
+        if (text.style.display === "none") {
+            text.style.display = "block";
+            reset.innerHTML = "Go back to Practice Round"
+
+            } else {
+            text.style.display = "none";
+            reset.innerHTML = "Click for calculator";
+             };
+    }
+
+    function resetInput(id) {
+   document.getElementById(id+"input").value="";
+}
+</script>
+
+<style>
+    .tstyle {visibility: hidden;
+}
+</style>
+{{endblock}}

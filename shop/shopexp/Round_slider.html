@@ -1,0 +1,786 @@
+{{ block title }}
+{{ endblock }}
+{{ block content }}
+
+<h2><center> Round {{player.round_number}} </center></h2><br>
+{{ if player.num_acc == 2 }}
+<p><center><strong>First, examine both stores, then make your purchases.</strong></center><br></p>
+{{ else }}
+<p><center><strong>Examine the store, then make your purchases.</strong></center><br></p>
+{{ endif}}
+
+<p>
+
+        <button id="reset" type='button' onclick="toggleText()">Click to use the calculator</button>
+
+        <p id="container" style='display: none'> <strong>PAYOFF CALCULATOR</strong><br><br>
+        If you purchase: <br> <br>
+    <strong>Number of Apples</strong> &nbsp &nbsp <input type="text" id="n1"/><br/><br/>
+    <strong>Number of Oranges</strong> &nbsp <input type="text" id="n2"/><br/><br/>
+        Then your payoff is: <br><br>
+        <button type = "button" id="calc_button" onclick="calc();">Click to calculate</button>
+        &nbsp<input type="text" id="result"/>
+</p>
+
+{{ if num_store == 1 }}
+
+<div id = "ins1" class="card bg-light m-3">
+    <div class="card-body">
+        <center><u><strong> Store 1</strong></u></center>
+        <ul>
+            <li> You have a <strong>{{ gift }} ECU </strong>gift certificate in Store 1.</li>
+            <li> The price of apples is <strong>{{ price_a }} ECU per apple</strong>. </li>
+            <li> The price of oranges is <strong>{{ price_o }} ECU per orange</strong>.</li>
+        </ul>
+
+        <table style="width:70%" >
+        <tr>
+            <td></td>
+            <td id="styling" class="second_column1"><div class="slidecontainer">
+                <p id="description">Use the slider to indicate your purchase</p>
+                <input type="range" class = "slider" name="a_choice" id="a_choice" onchange="showButton()" min="0" max="max1" oninput="updateDescription(this)"
+                onclick="updateDescription(this);showButton();updateSlider(this)">
+            </div></td>
+			<td></td>
+
+		</tr>
+
+        <tr>
+         <td id="styling" class="first_column"><p id="assetA1"><span><span> Apples</span>
+            </span></p></td>
+         <td id="arrowA">
+             <div class="arrow">
+                <div class="line"></div>
+                <div class="point"></div>
+             </div>
+         </td>
+         <td></td>
+        </tr>
+        <tr>
+         <td></td>
+         <td id="arrowB">
+             <div class="arrow2">
+                <div class="line2"></div>
+                <div class="point2"></div>
+             </div>
+         </td>
+         <td id="styling" class="third_column"><p id="assetB1"><span><span> Oranges</span>
+            </span></p></td>
+        </tr>
+        </table>
+    </div></div>
+
+<button id="next2" style="visibility: hidden;" onclick="myFunction()"
+        class="btn btn-primary popup" type="button">Finalize your choices
+    <span class="popuptext" id="myPopup"> To revise your choices, click the decision screen.
+To finalize your choices, click the button below again.</span>
+</button>
+
+<script>
+
+var clickCount = 0;
+var next2 = document.getElementById("next2");
+var popup = document.getElementById("myPopup");
+var asset_A = document.getElementById("a_choice");
+function myFunction() {
+  popup.style.visibility = 'visible';
+  asset_A.onchange = function() {
+    popup.style.visibility = 'hidden';
+    clickCount = 0;
+    }
+  if (popup.style.visibility == 'hidden') {
+      next2.type = "button";
+       clickCount = 0;
+      };
+  if (popup.style.visibility == 'visible') {
+      clickCount++;
+      next2.type = "button"
+      if (clickCount > 1) {
+          next2.type = ""
+      }};
+
+}
+</script>
+<script>
+    var movingSlider1 = false
+    let max1 = js_vars.gift/js_vars.price_a
+    document.getElementById("a_choice").setAttribute("max",max1);
+    let description = document.getElementById('description');
+    function updateDescription(input) {
+        let a_choice = parseInt(input.value);
+        let o_choice = Math.floor((js_vars.gift - a_choice*js_vars.price_a)/js_vars.price_o)
+        description.innerText = `${a_choice} apples and ${o_choice} oranges`;
+        document.getElementById("a_choice").classList.add('slider-thumb-PR');
+        movingSlider1 = true;
+    }
+
+    function calc() {
+        var n1 = parseFloat(document.getElementById('n1').value);
+        var n2 = parseFloat(document.getElementById('n2').value);
+        if (js_vars.treatment == 1) {
+	        document.getElementById('result').value = ((2/5)*Math.pow(Math.sqrt(n1)+Math.sqrt(n2),2)).toFixed(2);
+	    } else {
+	        document.getElementById('result').value = ((1/10)*Math.pow(Math.sqrt(n1)+Math.sqrt(n2),2)).toFixed(2);
+	    };
+	    return document.getElementById('result').value
+	}
+
+	function toggleText() {
+	    clickCount = 0;
+	    popup.style.visibility = 'hidden';
+	    let round = js_vars.round;
+	    movingSlider1 = false;
+	    document.getElementById("n1").value = '';
+        document.getElementById("n2").value = '';
+        document.getElementById("result").value = '';
+        var text = document.getElementById("container");
+        var reset = document.getElementById("reset");
+        var ins1 = document.getElementById("ins1");
+        var next2 = document.getElementById("next2");
+        next2.classList.toggle("tstyle");
+        ins1.classList.toggle("tstyle");
+
+        if (text.style.display === "none") {
+            text.style.display = "block";
+            reset.innerHTML = "Go back to Round "+ round
+            } else {
+
+            text.style.display = "none";
+            reset.innerHTML = "Click for calculator";
+             };
+    }
+
+    function showButton() {
+        document.getElementById("a_choice").classList.add('slider-thumb-PR');
+        document.getElementById('next2').style.visibility = 'visible';
+    }
+
+    document.getElementById('reset').addEventListener("click", function() {
+    var text = document.getElementById("container");
+    if (text.style.display === "block") {
+    liveSend({'calc_click': 1});
+    }});
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+    document.getElementById('calc_button').addEventListener("click", function() {
+    var calc_n1 = parseFloat(document.getElementById('n1').value);
+    var calc_n2 = parseFloat(document.getElementById('n2').value);
+    liveSend({'calc_n1': calc_n1,'calc_n2': calc_n2});
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+    function updateSlider(slider) {
+        liveSend({'slider_move': parseInt(slider.value)});
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+
+</script>
+
+{{else}}
+<div id="store" class="boxes">
+    <div id = "ins2" class="box" style="background-color:#F0F0F0">
+    <br><center><u><strong> Store 1</strong></u></center>
+    <ul>
+    {{ if order_acc == 1 }}
+        {{ if participant.treatment == 1 and player.decision == 1 }}
+        <li> You have an <strong>{{ gift }} ECU </strong>gift certificate in Store 1.</li>
+        {{ else }}
+        <li> You have a <strong>{{ gift }} ECU </strong>gift certificate in Store 1.</li>
+        {{ endif }}
+        <li> The price of apples is <strong>{{ price_a }} ECU per apple</strong>. </li>
+        <li> The price of oranges is <strong>{{ price_o }} ECU per orange</strong>.</li>
+        {{ if participant.treatment == 2 }}
+        {{ if  player.decision == 1 }}
+        <li> Apples are only sold in <strong>30-packs</strong>.</li>
+        {{ else }}
+        <li> Apples are only sold in a <strong>24-pack</strong>.</li>
+        {{ endif }}
+        {{ else }}
+        <br>
+        {{ endif }}
+    {{ else }}
+        <li> You have a <strong>{{ gift2 }} ECU </strong>gift certificate in Store 1.</li>
+        <li> The price of apples is <strong>{{ price_a2 }} ECU per apple</strong>. </li>
+        <li> The price of oranges is <strong>{{ price_o2 }} ECU per orange</strong>.</li><br>
+
+    {{ endif }}
+    </ul>
+    <table style="width:100%">
+        <tr>
+            <td></td>
+
+            {{ if order_acc == 1}}
+
+            <td id="styling" class="second_column"><div  class="slidecontainer">
+                <p id="description">Use the slider to indicate your purchase</p>
+                <input type="range" class = "slider" id="a_choice" name="a_choice" min="0" max="max1" step="step1" onchange="showButton1()"
+                       oninput="updateDescription(this)"
+                onclick="updateDescription(this);showButton1();updateSlider(this)">
+                </div></td>
+
+             {{ else }}
+            <td id="styling" class="second_column"><div class="slidecontainer">
+                <p id="description">Use the slider to indicate your purchase</p>
+                <input type="range" class = "slider" name="a_choice2" id="a_choice2" onchange="showButton1()" min="0" max="max2" oninput="updateDescription(this)"
+                onclick="updateDescription(this);showButton1();updateSlider(this)">
+            </div></td>
+
+                {{ endif }}
+
+			<td></td>
+		</tr>
+        <tr>
+         <td id="styling" class="first_column"><p id="assetA1"><span><span> Apples</span>
+            </span></p></td>
+         <td id="arrowA">
+             <div class="arrow">
+                <div class="line"></div>
+                <div class="point"></div>
+             </div>
+         </td>
+         <td></td>
+        </tr>
+        <tr>
+         <td></td>
+         <td id="arrowB">
+             <div class="arrow2">
+                <div class="line2"></div>
+                <div class="point2"></div>
+             </div>
+         </td>
+         <td id="styling" class="third_column"><p id="assetB1"><span><span> Oranges</span>
+            </span></p></td>
+        </tr>
+
+    </table>
+    </div>
+    <div id = "ins3" class="box" style="background-color:#F0F0F0">
+            <br><center><u><strong> Store 2</strong></u></center>
+    <ul>
+    {{ if order_acc == 1 }}
+        <li> You have a <strong>{{ gift2 }} ECU </strong>gift certificate in Store 2.</li>
+        <li> The price of apples is <strong>{{ price_a2 }} ECU per apple</strong>. </li>
+        <li> The price of oranges is <strong>{{ price_o2 }} ECU per orange</strong>.</li><br>
+    {{ else }}
+        <li> You have a <strong>{{ gift }} ECU </strong>gift certificate in Store 2.</li>
+        <li> The price of apples is <strong>{{ price_a }} ECU per apple</strong>. </li>
+        <li> The price of oranges is <strong>{{ price_o }} ECU per orange</strong>.</li><br>
+    {{ endif }}
+    </ul>
+
+    <table style="width:100%">
+        <tr>
+            <td></td>
+            {{ if order_acc == 1 }}
+            <td id="styling" class="second_column"><div class="slidecontainer">
+                <p id="description2">Use the slider to indicate your purchase</p>
+                <input type="range" class = "slider" name="a_choice2" id="a_choice2" onchange="showButton()" min="0" max="max2" oninput="updateDescription2(this)"
+                onclick="updateDescription2(this);showButton();updateData(this)">
+            </div></td>
+                {{ else }}
+            <td id="styling" class="second_column"><div class="slidecontainer">
+                <p id="description2">Use the slider to indicate your purchase</p>
+                <input type="range" class = "slider" name="a_choice" id="a_choice" onchange="showButton()" min="0" max="max1" oninput="updateDescription2(this)"
+                onclick="updateDescription2(this);showButton();updateData(this)">
+            </div></td>
+                {{ endif }}
+            <td></td>
+        </tr>
+        <tr>
+         <td id="styling" class="first_column"><p id="assetA1"><span><span> Apples</span>
+            </span></p></td>
+         <td id="arrowA">
+             <div class="arrow">
+                <div class="line"></div>
+                <div class="point"></div>
+             </div>
+         </td>
+         <td></td>
+        </tr>
+        <tr>
+         <td></td>
+         <td id="arrowB">
+             <div class="arrow2">
+                <div class="line2"></div>
+                <div class="point2"></div>
+             </div>
+         </td>
+         <td id="styling" class="third_column"><p id="assetB1"><span><span> Oranges</span>
+            </span></p></td>
+        </tr>
+    </table>
+
+    </div></div>
+
+<button id="next2" style="visibility: hidden;" onclick="myFunction()"
+        class="btn btn-primary popup" type="button">Finalize your choices
+    <span class="popuptext" id="myPopup"> To revise your choices, click the decision screen.
+To finalize your choices, click the button below again.</span>
+</button>
+
+<script>
+
+var clickCount = 0;
+var next2 = document.getElementById("next2");
+var popup = document.getElementById("myPopup");
+var a_choice = document.getElementById("a_choice");
+var a_choice2 = document.getElementById("a_choice2");
+function myFunction() {
+  popup.style.visibility = 'visible';
+
+  a_choice.onchange = function() {
+    popup.style.visibility = 'hidden';
+    clickCount = 0;
+    }
+  a_choice2.onchange = function() {
+    popup.style.visibility = 'hidden';
+    clickCount = 0;
+    }
+  if (popup.style.visibility == 'hidden') {
+      next2.type = "button"
+      };
+  if (popup.style.visibility == 'visible') {
+      clickCount++;
+      next2.type = "button"
+      if (clickCount == 2) {
+          next2.type = ""
+      }};
+}
+
+</script>
+<script>
+
+        var movingSlider1 = false;
+        var movingSlider2 = false;
+        let max1 = js_vars.gift/js_vars.price_a;
+        let max2 = js_vars.gift2/js_vars.price_a2;
+        if (js_vars.treatment == 2 ) {
+            if (js_vars.decision == 1) {
+                max1 = 30;
+                step1 = 30;
+            } else {
+                step1 = 24;
+            };
+            document.getElementById("a_choice").setAttribute("step",step1);
+        };
+        document.getElementById("a_choice").setAttribute("max",max1);
+        document.getElementById("a_choice2").setAttribute("max",max2);
+
+	let description = document.getElementById('description');
+    function updateDescription(input) {
+        if (js_vars.order_acc == 1) {
+            let a_choice = parseInt(input.value);
+            let o_choice = Math.floor((js_vars.gift - a_choice*js_vars.price_a)/js_vars.price_o);
+            description.innerText = `${a_choice} apples and ${o_choice} oranges`;
+            movingSlider1 = true;
+        }
+        else {
+            let a_choice = parseInt(input.value);
+            let o_choice = Math.floor((js_vars.gift2 - a_choice*js_vars.price_a2)/js_vars.price_o2);
+            description.innerText = `${a_choice} apples and ${o_choice} oranges`;
+            movingSlider1 = true;
+        };
+    }
+
+
+    let description2 = document.getElementById('description2');
+    function updateDescription2(input) {
+        if (js_vars.order_acc == 1) {
+            let a_choice = parseInt(input.value);
+            let o_choice = Math.floor((js_vars.gift2 - a_choice*js_vars.price_a2)/js_vars.price_o2);
+            description2.innerText = `${a_choice} apples and ${o_choice} oranges`;
+            document.getElementById("a_choice2").classList.add('slider-thumb-PR2');
+            movingSlider2 = true;
+        }
+        else {
+            let a_choice = parseInt(input.value);
+            let o_choice = Math.floor((js_vars.gift - a_choice*js_vars.price_a)/js_vars.price_o);
+            description2.innerText = `${a_choice} apples and ${o_choice} oranges`;
+            document.getElementById("a_choice").classList.add('slider-thumb-PR2');
+            movingSlider2 = true;
+        };
+    }
+
+
+
+    function showButton1(){
+        if (js_vars.order_acc == 1) {
+            document.getElementById("a_choice").classList.add('slider-thumb-PR');
+        }
+        else {
+            document.getElementById("a_choice2").classList.add('slider-thumb-PR2');
+        };
+        if ((movingSlider1)&&(movingSlider2)) {
+            document.getElementById('next2').style.visibility = 'visible';
+        };
+    }
+
+    function showButton() {
+        if (js_vars.order_acc == 1) {
+            document.getElementById("a_choice2").classList.add('slider-thumb-PR2');
+        }
+        else {
+            document.getElementById("a_choice").classList.add('slider-thumb-PR');
+        };
+        if ((movingSlider1)&&(movingSlider2)) {
+            document.getElementById('next2').style.visibility = 'visible';
+        };
+    }
+
+    function calc() {
+        var n1 = parseFloat(document.getElementById('n1').value);
+        var n2 = parseFloat(document.getElementById('n2').value);
+        if (js_vars.treatment == 1) {
+	        document.getElementById('result').value = ((2/5)*Math.pow(Math.sqrt(n1)+Math.sqrt(n2),2)).toFixed(2);
+	    } else {
+	        document.getElementById('result').value = ((1/10)*Math.pow(Math.sqrt(n1)+Math.sqrt(n2),2)).toFixed(2);
+	    };
+	    return document.getElementById('result').value
+	}
+
+	function toggleText() {
+	    clickCount = 0;
+	    popup.style.visibility = 'hidden';
+	    movingSlider1 = false;
+	    movingSlider2 = false;
+	    document.getElementById("n1").value = '';
+        document.getElementById("n2").value = '';
+        document.getElementById("result").value = '';
+	    var round = js_vars.round;
+        var text = document.getElementById("container");
+        var store = document.getElementById("store");
+        var reset = document.getElementById("reset");
+        var next2 = document.getElementById("next2");
+        next2.classList.toggle("tstyle");
+        store.classList.toggle("tstyle");
+
+
+        if (text.style.display === "none") {
+            text.style.display = "block";
+            reset.innerHTML = "Go back to Round "+ round
+
+            } else {
+            text.style.display = "none";
+            reset.innerHTML = "Click for calculator";
+             };
+    }
+
+    document.getElementById('reset').addEventListener("click", function() {
+    var text = document.getElementById("container");
+    if (text.style.display === "block") {
+    liveSend({'calc_click': 1});
+    }});
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+    document.getElementById('calc_button').addEventListener("click", function() {
+    var calc_n1 = parseFloat(document.getElementById('n1').value);
+    var calc_n2 = parseFloat(document.getElementById('n2').value);
+    liveSend({'calc_n1': calc_n1,'calc_n2': calc_n2});
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+
+    function updateSlider(slider) {
+        liveSend({'slider_move': parseInt(slider.value)});
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+    function updateData(slider) {
+        liveSend({'slider_move2': parseInt(slider.value)});
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+
+</script>
+{{ endif }}
+
+
+<style>
+#styling {
+  text-align: center;
+}
+
+.first_column {
+  table-layout: auto;
+}
+
+.second_column {
+   width: 50%;
+}
+
+.third_column {
+   table-layout: auto;
+}
+
+.tstyle {visibility: hidden;
+}
+
+
+.slider{
+  -webkit-appearance: none;
+   width: 100%;
+   height: 15px;
+   border-radius: 5px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+}
+
+
+.slider:hover {
+  opacity: 1;
+}
+
+
+.slider-thumb-PR::-webkit-slider-thumb{
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #58949C;
+}
+
+.slider-thumb-PR2::-webkit-slider-thumb{
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #58949C;
+}
+
+
+
+#next2 {
+   border: black;
+   float: right;
+    }
+
+
+#calc_button:hover {
+  background-color: #fff;
+}
+
+input[type=range]::-webkit-slider-thumb {
+      border: none;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      -webkit-appearance: none;
+   }
+
+</style>
+<style>
+#ins1 {
+  width: 100%;
+}
+
+#ins2 {
+  width: 50%;
+  height: 400px;
+  position: relative;
+  left: -20px;
+  border: 1px solid #C0C0C0;
+}
+
+#ins3 {
+  width: 50%;
+  height: 400px;
+  position: relative;
+  right: -20px;
+  border: 1px solid #C0C0C0;
+}
+
+.box {
+  float: left;
+  width: 50%;
+}
+
+.boxes::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#styling {
+  text-align: center;
+}
+
+.first_column {
+  table-layout: auto;
+}
+
+#assetA {
+  position: relative;
+  left: 0px;
+  color: #243743;
+}
+
+#assetB {
+  position: relative;
+  right: 0px;
+  color: #28B78D;
+}
+
+#assetA1 {
+  position: relative;
+  left: 20px;
+  color: #243743;
+}
+
+#assetB1 {
+  position: relative;
+  right: 35px;
+  color: #28B78D;
+}
+
+.second_column {
+   width: 68%;
+}
+
+.second_column1 {
+   width: 50%;
+}
+
+
+.arrow {
+  width: 100%;
+  position: relative;
+}
+
+.line {
+  margin-top: 8px;
+  width: 98%;
+  background: #243743;
+  height: 2px;
+  float: left;
+  position: absolute;
+}
+
+.point {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #243743;
+  float: right;
+}
+
+
+.arrow2 {
+  width: 100%;
+  position: relative;
+}
+
+.line2 {
+  margin-top: 9px;
+  width: 98%;
+  background: #28B78D;
+  height: 2px;
+  float: right;
+  position: absolute;
+}
+
+.point2 {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid #28B78D;
+  float: left;
+}
+
+.slider{
+  -webkit-appearance: none;
+   width: 100%;
+   height: 15px;
+   border-radius: 5px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+}
+
+
+.slider:hover {
+  opacity: 1;
+}
+
+
+.slider-thumb-PR::-webkit-slider-thumb{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4f858c;
+}
+
+.slider-thumb-PR2::-webkit-slider-thumb{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4f858c;
+}
+
+input[type=range]::-webkit-slider-thumb {
+      border: none;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      -webkit-appearance: none;
+   }
+
+ul {
+  padding-left: 40px;
+}
+
+.popuptext {
+  visibility: hidden;
+  position: absolute;
+  margin-left: -180px;
+  width: 300px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  bottom: 125%;
+  font-size: 12.5px;
+}
+
+.popup {
+  position: relative;
+  cursor: pointer;
+}
+
+.popup .show {
+  visibility: visible;
+}
+
+#next2 {
+   background-color: #BAD0DE; color: black;
+   border: #D4E1CD;
+   float: right;
+   margin: 40px auto;
+   border-radius: 60px;
+   height: 55px;
+   width: 150px
+}
+
+</style>
+
+
+{{ endblock }}

@@ -1,0 +1,178 @@
+{{ block title }}
+{{ endblock }}
+{{ block content }}
+<!-- References: https://www.otreehub.com/projects/otree-snippets/  -->
+<style>
+    .tab {
+        display: none;
+    }
+</style>
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<div class="tab">
+    <h3><center> Instructions </center></h3><br>
+       <div id = "ins1" class="card bg-light m-3">
+    <div class="card-body" style="background-color:#F5F5F5	;">
+        <p>
+           <u><center><strong>Your bonus payment is based on decisions in one round</strong></center></u><br>
+        <ul>
+        <li>There will be five rounds of the shopping task. </li>
+        <li>At the end, one round will be selected randomly to be "the round that counts".</li>
+        <li>You will be paid your earnings from the round that counts based on (and only based on) your decisions in that round. </li>
+        <li>Since any round could be the round that counts, you should behave in each round as if it is the round that counts.</li>
+    </ul>
+        </p> </div></div>
+
+    <p>
+    <center><button id ="next" type="button" class="btn btn-primary btn-tab" data-offset="1"> >>> </button></center>
+</div>
+
+<div class="tab">
+    <h3><center> Instructions </center></h3><br>
+       <div id = "ins1" class="card bg-light m-3">
+    <div class="card-body" style="background-color:#F5F5F5	;">
+        <p>
+           <u><center><strong>The shopping task</strong></center></u><br>
+        <ul>
+        <li>In each round of this task, you will buy up to two different fictitious “fruits” at up to two “stores”.</li>
+        <li>You have a separate gift certificate (denominated in experimental currency units – ECUs) at each store that can be spent only at that store.</li>
+        <li>Your monetary earnings for the experiment are based on the total amount of each fruit in your final bundle for a round after you have completed your shopping at all stores.</li>
+    </ul>
+
+           </p> </div></div>
+
+    <p>
+        <button id="back" type="button" class="btn btn-primary btn-tab" data-offset="-1"> <<< </button>
+        <button id ="next" type="button" class="btn btn-primary btn-tab" data-offset="1"> >>> </button>
+    </p>
+</div>
+
+<div class="tab">
+       <h3><center> Instructions </center></h3><br>
+       <div id = "ins1" class="card bg-light m-3">
+    <div class="card-body" style="background-color:#F5F5F5;">
+    <p>
+    <u><center><strong>Round</strong></center></u><br>
+        <ul>
+        <li>For each round, the top of the page will outline the number of stores.</li>
+        <li>The box for a store indicates your budget and the prices of fruits in that store.</li>
+        <li>In each store, move the slider to select your preferred purchase of apples and oranges.</li>
+        <li>All combinations appearing on the slider are affordable purchases at a store given the prices and your budget.</li>
+        <li> If a round has two stores, you should first examine both stores, then make your purchases.</li>
+    </ul>
+        </p> </div></div>
+    <p>
+        <button id="back" type="button" class="btn btn-primary btn-tab" data-offset="-1"> <<< </button>
+        <button id="next2" type="button" class="btn btn-primary btn-tab" data-offset="1"> >>> </button>
+    </p>
+</div>
+<div class="tab">
+       <h3><center> Instructions </center></h3><br>
+       <div id = "ins1" class="card bg-light m-3">
+       <div class="card-body" style="background-color:#F5F5F5;">
+       <p>
+    <u><center><strong>How Your Payment is Determined</strong></center></u><br>
+        <ul>
+        {{ if participant.treatment != 1 }}
+        <li>Your payment will be calculated from your final bundle in the round that counts according to the function: <br>
+            <math>
+            <mrow>
+                <mi>Payment</mi><mo>=</mo>
+                <mi></mi><mo>&#8530;</mo>
+                <mi></mi><mo>(</mo>
+                <msqrt>
+                    <mrow>
+                        <mi>#apples</mi>
+                    </mrow>
+                </msqrt>
+                <mi></mi><mo>+</mo>
+                <msqrt>
+                    <mrow>
+                        <mi>#oranges</mi>
+                    </mrow>
+                </msqrt>
+                <mi></mi><mo>)</mo>
+            </mrow><sup>2</sup>
+            </math></li>
+        {{ else }}
+
+        <li>Your payment will be calculated from your final bundle in the round that counts according to the function: <br>
+            <math>
+            <mrow>
+                <mi>Payment</mi><mo>=</mo>
+                <mi></mi><mo>&#8534;</mo>
+                <mi></mi><mo>(</mo>
+                <msqrt>
+                    <mrow>
+                        <mi>#apples</mi>
+                    </mrow>
+                </msqrt>
+                <mi></mi><mo>+</mo>
+                <msqrt>
+                    <mrow>
+                        <mi>#oranges</mi>
+                    </mrow>
+                </msqrt>
+                <mi></mi><mo>)</mo>
+                <sup>2</sup>
+            </math>
+        </li>
+        {{ endif }}
+        <li>To help you calculate the payment you would receive for a final bundle, we have provided a payment calculator.</li>
+        <li>Click “Use calculator” and plug in numbers of apples and oranges to use it.</li>
+        <li>Note that when you use the calculator, the sliders will be hidden.</li>
+        <li>Notice three features of how your payments are determined:
+        <ul>
+            <li>A final bundle with more of every fruit earns a higher payment.</li>
+            <li>A mix of fruits earns a higher payment: a final bundle with 5
+                apples and 5 oranges earns you a higher payment than a final bundle
+                with 8 apples and 2 oranges, which in turn earns a higher payment
+                than a final bundle with 10 apples and 0 oranges.</li>
+            <li>A final bundle with 7 apples and 3 oranges earns the same final
+                payment as a final bundle with 3 apples and 7 oranges.</li>
+        </ul>
+        </li>
+        <li>If the prices of apples and oranges are not the same, you thus face
+            a trade-off between buying as many units of fruit as possible versus
+            buying a mix that includes both fruits.</li>
+    </ul>
+              </p> </div></div>
+    <p>
+        <button id="back" type="button" class="btn btn-primary btn-tab" data-offset="-1"> <<< </button>
+        <button id="next2" class="btn btn-primary"> >>> </button>
+    </p>
+</div>
+
+<script>
+
+    let activeTab = 0;
+
+    function showCurrentTabOnly() {
+        let tabIndex = 0;
+        for (let tab of document.getElementsByClassName('tab')) {
+            tab.style.display = tabIndex === activeTab ? 'block' : 'none';
+            tabIndex++;
+        }
+    }
+
+    showCurrentTabOnly();
+    for (let btn of document.getElementsByClassName('btn-tab')) {
+        btn.onclick = function () {
+            activeTab += parseInt(btn.dataset.offset);
+            showCurrentTabOnly();
+        }
+    }
+</script>
+
+<style>
+
+
+#next {
+   float: right;
+    }
+
+
+#next2 {
+   float: right;
+    }
+</style>
+{{ endblock }}
